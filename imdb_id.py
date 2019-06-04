@@ -1,25 +1,22 @@
 from bs4 import BeautifulSoup
 import requests
 
+# Collecting URL from the search page
+movie = movie_name
+url = 'https://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=all'
+movie_id = []
 
-class imdb_id:
+page = requests.get(url)
 
-    # Collecting URL from the search page
-    movie = movie_name
-    url = 'https://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=all'
-    movie_id = []
+# Get raw data from URL
+soup = BeautifulSoup(page.text, 'html.parser')
 
-    page = requests.get(url)
+# Search for movie id so we can get the link to the movie detail page
+# look for a
+search = soup.find('table')
+table = search.find_all('a', limit=1)
 
-    # Get raw data from URL
-    soup = BeautifulSoup(page.text, 'html.parser')
+# extract the movie id from the href and store it in a list to use it later.
 
-    # Search for movie id so we can get the link to the movie detail page
-    # look for a
-    search = soup.find('table')
-    table = search.find_all('a', limit=1)
-
-    # extract the movie id from the href and store it in a list to use it later.
-
-    for link in table:
+for link in table:
         movie_id.append(link.get('href'))
