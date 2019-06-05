@@ -5,7 +5,7 @@ from random import randint
 
 
 # Collecting URL from the search page
-movie = "the hulk"
+movie = "the incredible hulk"
 search_url = 'https://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=all'
 
 
@@ -34,5 +34,9 @@ for link in table:
 
     soup2 = BeautifulSoup(page2.text, 'html.parser')
     search_name = soup2.find('div', class_='title_wrapper')
+    movie_title = search_name.h1.text
+    search_genre = soup2.find('div', class_='subtext')
+    movie_genre = search_genre.a.text
 
-    print(search_name)
+    print(movie_title)
+    print(movie_genre)
